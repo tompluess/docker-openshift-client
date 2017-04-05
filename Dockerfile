@@ -1,20 +1,25 @@
-FROM docker
+FROM ebits/openshift-client
 
 MAINTAINER "Tom Pluess <tom@skyr.ch>"
 
 RUN apk update && \
     apk add --no-cache \
                 git \
+                curl \
 		ca-certificates \
 		openssl
 
-ENV OC_VERSION "v1.4.1"
-ENV OC_RELEASE "openshift-origin-client-tools-v1.4.1-3f9807a-linux-64bit"
+ENV DOCKER_BUCKET get.docker.com
+ENV DOCKER_VERSION 17.03.1-ce
+ENV DOCKER_SHA256 820d13b5699b5df63f7032c8517a5f118a44e2be548dd03271a86656a544af55
 
-RUN mkdir -p /tmp/oc && \
-    wget -O /tmp/oc/release.tar.gz https://github.com/openshift/origin/releases/download/$OC_VERSION/$OC_RELEASE.tar.gz && \
-    tar --strip-components=1 -xzvf /tmp/oc/release.tar.gz -C /tmp/oc/ && \
-    mv /tmp/oc/oc /usr/bin/ && \
-    rm -rf /tmp/oc
+RUN set -x \
+        && mkdir -p /tmp/docker \
+	&& curl -fSL "https://${DOCKER_BUCKET}/builds/Linux/x86_64/docker-${DOCKER_VERSION}.tgz" -o /tmp/docker/docker.tgz \
+	&& sha256sum /tmp/docker/docker.tgz  | grep $DOCKER_SHA256 \
+	&& tar -xzvf /tmp/docker/docker.tgz -C /tmp/docker/ \
+	&& mv /tmp/docker/docker/* /usr/local/bin/ \
+	&& rm -rf /tmp/docker \
+	&& docker -v
 
 ADD run-self-test.sh /opt/run-self-test.sh
