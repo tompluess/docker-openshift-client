@@ -6,6 +6,7 @@ RUN apk update && \
     apk add --no-cache \
                 git \
                 curl \
+                bash \
 		ca-certificates \
 		openssl
 
