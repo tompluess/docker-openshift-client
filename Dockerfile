@@ -17,3 +17,4 @@ RUN mkdir -p /tmp/oc && \
     mv /tmp/oc/oc /usr/bin/ && \
     rm -rf /tmp/oc
 
+ADD run-self-test.sh /opt/run-self-test.sh
