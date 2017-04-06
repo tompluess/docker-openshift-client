@@ -6,8 +6,8 @@ RUN apk update && \
     apk add --no-cache \
                 git \
                 curl \
-		ca-certificates \
-		openssl
+                ca-certificates \
+                openssl
 
 ENV DOCKER_BUCKET get.docker.com
 ENV DOCKER_VERSION 17.03.1-ce
