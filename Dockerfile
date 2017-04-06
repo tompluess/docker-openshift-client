@@ -1,4 +1,4 @@
-FROM ebits/openshift-client
+FROM ebits/openshift-client:v1.4.1
 
 MAINTAINER "Tom Pluess <tom@skyr.ch>"
 
