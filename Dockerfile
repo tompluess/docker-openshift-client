@@ -4,6 +4,7 @@ MAINTAINER "Tom Pluess <tom@skyr.ch>"
 
 RUN apk update && \
     apk add --no-cache \
+                bash \
                 git \
                 curl \
                 ca-certificates \
